@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Calender</title>
+
+    <meta charset = "ISO-8859-1">
+    <title>Calendar Data</title>
 </head>
+
 <body>
-<h1>Im in </h1>
+
+<table id="countryList">
+    <thead>
+    <tr>
+        <th> Start Time </th>
+        <th> End Time </th>
+        <th> Description </th>
+        <th> Location </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="event : ${events}">
+        <th:block th:with="sdf = ${new ('yyyy-MM-dd'T'HH:mm:ssZ')}">
+            <td th:text="${#dates.format(sdf.parse(event.start.dateTime), 'dd-MM-yyyy')}"></td>
+        </th:block>
+
+        <td th:text="${event.end.dateTime}"></td>
+        <td th:text="${event.description}"></td>
+        <td th:text="${event.location}"></td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
+
 </html>

@@ -1,6 +1,8 @@
 package com.example.sso_google.controller;
 
+import com.example.sso_google.model.EventList;
 import com.example.sso_google.model.UserDetails;
+import com.example.sso_google.service.SsoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +21,7 @@ import org.thymeleaf.util.StringUtils;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -26,6 +29,9 @@ public class HomeController {
 
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
+
+    @Autowired
+    private SsoService ssoService;
 
     @GetMapping("/")
     public String home(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
@@ -58,11 +64,9 @@ public class HomeController {
     }
     @GetMapping("/calendar")
     public String calendar(Model model,OAuth2AuthenticationToken authentication){
-        OAuth2AuthorizedClient client = authorizedClientService
-                .loadAuthorizedClient(
-                        authentication.getAuthorizedClientRegistrationId(),
-                        authentication.getName());
 
+        EventList eventList =ssoService.getCalenderData(authentication);
+        model.addAttribute("events",eventList.getItems());
 
         return "calendar";
     }
