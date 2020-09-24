@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{base}">
 <head>
     <meta charset = "ISO-8859-1">
     <title>Insert title here</title>
 </head>
 <body>
-<a href = "calendar">Click here to Google Login</a>
+
+<div layout:fragment="page_content" id="page_content">
+    <h3>Welcome ! You are not loggedIn</h3>
+
+</div>
 </body>
 </html>
