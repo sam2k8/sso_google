@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
 
 <head>
 
@@ -10,27 +12,43 @@
 
 <body>
 
-<table id="countryList">
-    <thead>
-    <tr>
-        <th> Start Time </th>
-        <th> End Time </th>
-        <th> Description </th>
-        <th> Location </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="event : ${events}">
-        <th:block th:with="sdf = ${new ('yyyy-MM-dd'T'HH:mm:ssZ')}">
-            <td th:text="${#dates.format(sdf.parse(event.start.dateTime), 'dd-MM-yyyy')}"></td>
-        </th:block>
+<div layout:fragment="page_content" id="page_content">
+    <table id="eventList" class="table">
+        <thead>
+        <tr class="danger">
+            <th> Start Time </th>
+            <th> End Time </th>
+            <th> Description </th>
+            <th> Location </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="event : ${events}" class="info">
 
-        <td th:text="${event.end.dateTime}"></td>
-        <td th:text="${event.description}"></td>
-        <td th:text="${event.location}"></td>
-    </tr>
-    </tbody>
-</table>
+            <td th:text="${event.start}"></td>
+            <td th:text="${event.end}"></td>
+            <td th:text="${event.description}"></td>
+            <td th:text="${event.location}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table id="avialableSlot" class="table">
+        <thead>
+        <tr>
+            <th> Time Slot </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="slot : ${availableSlot}">
+            <td th:text="${slot}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
 
 </body>
 

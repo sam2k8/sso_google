@@ -1,6 +1,7 @@
 package com.example.sso_google.controller;
 
 import com.example.sso_google.model.EventList;
+import com.example.sso_google.model.EventViewModel;
 import com.example.sso_google.model.UserDetails;
 import com.example.sso_google.service.SsoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,10 @@ public class HomeController {
     private SsoService ssoService;
 
     @GetMapping("/")
-    public String home(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
+    public String home() {
         return "home";
     }
+
     @GetMapping("/loginSuccess")
     public String loginSuccess(Model model, OAuth2AuthenticationToken authentication){
         OAuth2AuthorizedClient client = authorizedClientService
@@ -66,7 +67,10 @@ public class HomeController {
     public String calendar(Model model,OAuth2AuthenticationToken authentication){
 
         EventList eventList =ssoService.getCalenderData(authentication);
-        model.addAttribute("events",eventList.getItems());
+        List<EventViewModel> events =ssoService.getEventProcessedData(eventList);
+        List<String> availableSlot =ssoService.getAvailableTimeSlot(eventList);
+        model.addAttribute("events",events);
+        model.addAttribute("availableSlot",availableSlot);
 
         return "calendar";
     }
