@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,9 @@ public class HomeController {
     private SsoService ssoService;
 
     @GetMapping("/")
-    public String home() {
+    public String home(Model model,Principal principal) {
+        String message = principal!=null ? "Welcome "+((DefaultOAuth2User) ((OAuth2AuthenticationToken) principal).getPrincipal()).getAttributes().get("name"):"You are not logged in";
+        model.addAttribute("message",message);
         return "home";
     }
 

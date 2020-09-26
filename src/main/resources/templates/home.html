@@ -4,12 +4,12 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="~{base}">
 <head>
     <meta charset = "ISO-8859-1">
-    <title>Insert title here</title>
+    <title>SSO Google</title>
 </head>
 <body>
 
 <div layout:fragment="page_content" id="page_content">
-    <h3>Welcome ! You are not loggedIn</h3>
+    <h3 th:text="${message}">Welcome!</h3>
 
 </div>
 </body>
